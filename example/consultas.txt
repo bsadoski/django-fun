@@ -1,0 +1,50 @@
+todos_registros = Reporter.objects.all()
+
+registros_2006 = Article.objects.filter(pub_date__year=2006)
+
+Article.objects.filter(pub_date__year=2006).
+    filter(headline__startswith='Manual')
+
+Article.objects.exclude(pub_date__year=2020)
+
+um_registro_somente = Article.objects.get(pk=1)
+
+Reporter.objects.all()[:5]
+
+Article.objects.order_by('headline')
+
+Article.objects.filter(pub_date__lte='2021-02-01')
+
+Article.objects.filter(reporter_id=1)
+
+Reporter.objects.get(first_name__exact="Pedro")
+
+Reporter.objects.get(last_name__iexact="BiAl")
+
+Reporter.objects.get(last_name__contains="hist")
+
+from django.db.models import Avg, Max, Min
+Book.objects.aggregate(Avg('price'), Max('price'), Min('price'))
+
+
+
+
+-> todas os artigos de determinado reporter
+
+-> todos os artigos de entre 2019-2020
+
+-> o reporter com mais artigos em 2020 
+articles = Article.objects.all().annotate(publication_count=Count('publications')).aggregate(maxval=Max('publication_count'))
+ articles = Article.objects.all().annotate(publication_count=Count('publications')).order_by('-publication_count')[0]
+
+
+-> artigos que contenham a palvra "python"
+ e tenham sido publicados 
+por determinado reporter em abril de 2015
+
+-> A quantidade de publicacoes que tenham 
+a letra "i"
+
+-> A media de publicacoes por artigos
+articles = Article.objects.all().annotate(publication_count=Count('publications'))
+.aggregate(Avg('publication_count'))

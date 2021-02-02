@@ -1,11 +1,13 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 import requests
 import pokebase as pb
 # Create your views here.
 
 # Make a request to api and take some fields to our view
+@login_required(login_url='/accounts/login/')
 def simple(request):
-    response = requests.get('https://pokeapi.co/api/v2/pokemon/1')
+    response = requests.get('https://pokeapi.co/api/v2/pokemon/6')
     pokemon = response.json()
     return render(request, 'pokemaoc/simple.html', {
         'nome': pokemon['name'],
